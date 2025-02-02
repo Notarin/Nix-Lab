@@ -10,20 +10,22 @@
   outputs = inputs@{ self, nixpkgs, yants, ... }:
     with (import yants.outPath { });
     let
-      hosts = [
-        "nixos"
-      ];
+      nixos_hosts = builtins.attrNames (
+        builtins.readDir ./NixOS/host-configs
+      );
+      modules = import ./Modules/default.nix;
     in
     {
-      nixpkgs = nixpkgs;
-      nixosConfigurations = nixpkgs.lib.genAttrs hosts (hostName:
+      modules = modules;
+      nixosConfigurations = nixpkgs.lib.genAttrs nixos_hosts (hostName:
         nixpkgs.lib.nixosSystem {
           specialArgs = {
             hostName = hostName;
+            modules = modules;
           };
           modules = [
-            ./hosts/${hostName}/configuration.nix
-            ./hosts/default/configuration.nix
+            ./NixOS/host-configs/${hostName}/configuration.nix
+            ./NixOS/common/configuration.nix
           ];
         }
       );

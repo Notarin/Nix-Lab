@@ -2,7 +2,6 @@
 {
   environment.systemPackages = with pkgs; [
     nixVersions.latest
-    neovim
     wget
     hyprland
     kitty
