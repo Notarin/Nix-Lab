@@ -2,10 +2,12 @@
 
 {
   imports = [
-    ./boot-loader.nix
     ./packages.nix
     ./hardware-configuration.nix
     ];
+
+  # Use the systemd-boot EFI boot loader.
+  boot.loader.systemd-boot.enable = true;
 
   # Users
   users.users = modules.add-users [ "notarin" ];
