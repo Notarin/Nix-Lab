@@ -19,16 +19,28 @@
       options = [ "subvol=rootfs" ];
     };
 
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/4470-14FC";
+      fsType = "vfat";
+      options = [ "fmask=0077" "dmask=0077" ];
+    };
+
+  fileSystems."/nix" =
+    { device = "/dev/disk/by-uuid/5ec66a1e-aea5-4c3e-b1f6-755e4a87cd8f";
+      fsType = "btrfs";
+      options = [ "subvol=nix" ];
+    };
+
   fileSystems."/home" =
     { device = "/dev/disk/by-uuid/5ec66a1e-aea5-4c3e-b1f6-755e4a87cd8f";
       fsType = "btrfs";
       options = [ "subvol=home" ];
     };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/4470-14FC";
-      fsType = "vfat";
-      options = [ "fmask=0077" "dmask=0077" ];
+  fileSystems."/persistent" =
+    { device = "/dev/disk/by-uuid/5ec66a1e-aea5-4c3e-b1f6-755e4a87cd8f";
+      fsType = "btrfs";
+      options = [ "subvol=persistent" ];
     };
 
   swapDevices = [ ];
