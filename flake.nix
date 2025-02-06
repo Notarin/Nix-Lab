@@ -5,9 +5,10 @@
       url = "git+https://code.tvl.fyi/depot.git:/nix/yants.git";
       flake = false;
     };
+    impermanence.url = "github:nix-community/impermanence";
   };
 
-  outputs = inputs@{ self, nixpkgs, yants, ... }:
+  outputs = inputs@{ self, nixpkgs, yants, impermanence, ... }:
     with (import yants.outPath { });
     let
       nixos_hosts = builtins.attrNames (
@@ -26,6 +27,7 @@
           modules = [
             ./NixOS/host-configs/${hostName}/configuration.nix
             ./NixOS/common/configuration.nix
+            impermanence.nixosModules.impermanence
           ];
         }
       );

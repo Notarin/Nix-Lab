@@ -4,6 +4,7 @@
   imports = [
     ./packages.nix
     ./hardware-configuration.nix
+    ./persistence.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
