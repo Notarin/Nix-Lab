@@ -1,4 +1,10 @@
+{ config, inputs, ... }:
+
 {
-  description = "Notarin Steele";
-  extraGroups = [ "networkmanager" "wheel" ];
+  users.users.notarin = {
+    description = "Notarin Steele";
+    extraGroups = [ "networkmanager" "wheel" ];
+    isNormalUser = true;
+    hashedPasswordFile = "/persistent/passwords/notarin";
+  };
 }

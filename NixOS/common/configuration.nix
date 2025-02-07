@@ -6,6 +6,7 @@
   networking.hostName = hostName;
   networking.networkmanager.enable = true;
   nixpkgs.config.allowUnfree = true;
+  users.mutableUsers = false;
 
   # Common package options
   users.defaultUserShell = pkgs.nushell;

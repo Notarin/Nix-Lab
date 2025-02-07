@@ -1,17 +1,15 @@
-{ config, pkgs, modules, ... }:
+{ config, pkgs, modules, inputs, ... }:
 
 {
   imports = [
     ./packages.nix
     ./hardware-configuration.nix
     ./persistence.nix
+    ../../../Users/notarin.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
-
-  # Users
-  users.users = modules.add-users [ "notarin" ];
 
   #Program configurations
   programs.hyprland.enable = true;
