@@ -13,6 +13,7 @@
 
   # Common services
   services.openssh.enable = true;
+  services.openssh.settings.StrictModes = false;
 
   environment.systemPackages = with pkgs; [
     nixVersions.latest
