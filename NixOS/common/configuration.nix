@@ -15,6 +15,10 @@
   services.openssh.enable = true;
   services.openssh.settings.StrictModes = false;
 
+  # Generic hardware settings
+  hardware.bluetooth.enable = true; # enables support for Bluetooth
+  hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
+
   environment.systemPackages = with pkgs; [
     nixVersions.latest
     wget
