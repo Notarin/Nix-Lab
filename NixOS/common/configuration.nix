@@ -14,6 +14,9 @@
   # Common services
   services.openssh.enable = true;
   services.openssh.settings.StrictModes = false;
+  services.pipewire = {
+    enable = true;
+  };
 
   # Generic hardware settings
   hardware.bluetooth.enable = true; # enables support for Bluetooth
