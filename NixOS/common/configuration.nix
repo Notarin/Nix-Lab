@@ -2,7 +2,10 @@
 
 {
   # Common system options
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings = {
+    experimental-features = [ "nix-command" "flakes" ];
+    trusted-users = [ "notarin" ];
+  };
   networking.hostName = hostName;
   networking = {
     useDHCP = true;
