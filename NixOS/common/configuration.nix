@@ -36,6 +36,8 @@
   };
   services.seatd.enable = true;
 
+  programs.noisetorch.enable = true;
+
   # Generic hardware settings
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;

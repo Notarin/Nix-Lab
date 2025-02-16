@@ -13,6 +13,8 @@
   #Program configurations
   programs.hyprland.enable = true;
 
+  fileSystems."/persistent".neededForBoot = true;
+
   # Impermanence
   boot.initrd.postResumeCommands = lib.mkAfter ''
     mkdir /btrfs_tmp
