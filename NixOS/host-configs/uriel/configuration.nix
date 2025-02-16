@@ -15,10 +15,6 @@
     enable = true;
     withUWSM = true;
   };
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-  };
 
   # Impermanence
   boot.initrd.postResumeCommands = lib.mkAfter ''
