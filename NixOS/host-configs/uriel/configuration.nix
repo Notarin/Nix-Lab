@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ./packages.nix
     ./hardware-configuration.nix
     ../../../Modules/persistence.nix
     ../../../Users/notarin.nix

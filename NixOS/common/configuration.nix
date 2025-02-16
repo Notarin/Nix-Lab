@@ -20,6 +20,10 @@
   nixpkgs.config.allowUnfree = true;
   users.mutableUsers = false;
 
+  environment.systemPackages = with pkgs; [
+    nixVersions.latest
+  ];
+
   # Common package options
   users.defaultUserShell = pkgs.nushell;
 
@@ -46,20 +50,4 @@
   # Generic hardware settings
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
-
-  environment.systemPackages = with pkgs; [
-    nixVersions.latest
-    wget
-    git
-    helix
-    nushell
-    fish
-    carapace
-    starship
-    zoxide
-    btop
-    nh
-    hyprland
-  ];
-
 }
