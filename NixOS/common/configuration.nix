@@ -4,7 +4,11 @@
   # Common system options
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   networking.hostName = hostName;
-  networking.networkmanager.enable = true;
+  networking = {
+    useDHCP = true;
+    networkmanager = { wifi.backend = "iwd"; };
+  };
+  networking.wireless.iwd.enable = true;
   nixpkgs.config.allowUnfree = true;
   users.mutableUsers = false;
 
@@ -16,11 +20,24 @@
   services.openssh.settings.StrictModes = false;
   services.pipewire = {
     enable = true;
+    pulse.enable = true;
+  };
+  services.seatd.enable = true;
+
+  # XDG-DESKTOP
+  xdg = {
+    portal = {
+      enable = true;
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-wlr
+        xdg-desktop-portal-gtk
+      ];
+    };
   };
 
   # Generic hardware settings
-  hardware.bluetooth.enable = true; # enables support for Bluetooth
-  hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
 
   environment.systemPackages = with pkgs; [
     nixVersions.latest
@@ -34,6 +51,7 @@
     zoxide
     btop
     nh
+    hyprland
   ];
 
 }

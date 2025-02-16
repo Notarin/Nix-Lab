@@ -4,15 +4,18 @@
   imports = [
     ./packages.nix
     ./hardware-configuration.nix
-    ./persistence.nix
+    ../../../Modules/persistence.nix
     ../../../Users/notarin.nix
-    ];
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
 
   #Program configurations
-  programs.hyprland.enable = true;
+  programs.hyprland = {
+    enable = true;
+    withUWSM = true;
+  };
   programs.neovim = {
     enable = true;
     defaultEditor = true;

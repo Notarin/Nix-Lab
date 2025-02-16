@@ -11,12 +11,9 @@
   outputs = inputs@{ self, nixpkgs, yants, impermanence, ... }:
     with (import yants.outPath { });
     let
-      nixos_hosts = builtins.attrNames (
-        builtins.readDir ./NixOS/host-configs
-      );
+      nixos_hosts = builtins.attrNames (builtins.readDir ./NixOS/host-configs);
       modules = import ./Modules/default.nix;
-    in
-    {
+    in {
       modules = modules;
       nixosConfigurations = nixpkgs.lib.genAttrs nixos_hosts (hostName:
         nixpkgs.lib.nixosSystem {
@@ -29,7 +26,6 @@
             ./NixOS/common/configuration.nix
             impermanence.nixosModules.impermanence
           ];
-        }
-      );
+        });
     };
 }
