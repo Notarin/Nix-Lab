@@ -36,17 +36,6 @@
   };
   services.seatd.enable = true;
 
-  # XDG-DESKTOP
-  xdg = {
-    portal = {
-      enable = true;
-      extraPortals = with pkgs; [
-        xdg-desktop-portal-wlr
-        xdg-desktop-portal-gtk
-      ];
-    };
-  };
-
   # Generic hardware settings
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
