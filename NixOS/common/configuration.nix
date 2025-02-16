@@ -1,4 +1,4 @@
-{ hostName, yants, config, pkgs, ... }:
+{ hostName, pkgs, ... }:
 
 {
   # Common system options

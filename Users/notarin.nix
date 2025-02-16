@@ -1,4 +1,4 @@
-{ config, inputs, ... }:
+{ ... }:
 
 {
   users.users.notarin = {

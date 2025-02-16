@@ -1,15 +1,10 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    yants = {
-      url = "git+https://code.tvl.fyi/depot.git:/nix/yants.git";
-      flake = false;
-    };
     impermanence.url = "github:nix-community/impermanence";
   };
 
-  outputs = inputs@{ self, nixpkgs, yants, impermanence, ... }:
-    with (import yants.outPath { });
+  outputs = { nixpkgs, impermanence, ... }:
     let
       nixos_hosts = builtins.attrNames (builtins.readDir ./NixOS/host-configs);
       modules = import ./Modules/default.nix;
