@@ -3,13 +3,18 @@
 {
   # Common system options
   nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     trusted-users = [ "notarin" ];
   };
   networking.hostName = hostName;
   networking = {
     useDHCP = true;
-    networkmanager = { wifi.backend = "iwd"; };
+    networkmanager = {
+      wifi.backend = "iwd";
+    };
   };
   networking.wireless.iwd.enable = true;
   nixpkgs.config.allowUnfree = true;

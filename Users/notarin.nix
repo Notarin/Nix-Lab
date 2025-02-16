@@ -3,7 +3,10 @@
 {
   users.users.notarin = {
     description = "Notarin Steele";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     isNormalUser = true;
     hashedPasswordFile = "/persistent/passwords/notarin";
   };
