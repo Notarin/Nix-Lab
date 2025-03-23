@@ -13,7 +13,6 @@
   #Program configurations
   programs.hyprland = {
     enable = true;
-    withUWSM = true;
   };
 
   # Impermanence
