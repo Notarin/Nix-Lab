@@ -1,10 +1,10 @@
-{ lib, ... }:
+{ lib, rootDir, ... }:
 
 {
   imports = [
     ./hardware-configuration.nix
-    ../../../Modules/persistence.nix
-    ../../../Users/notarin.nix
+    (rootDir + /Modules/persistence.nix)
+    (rootDir + /Users/notarin.nix)
   ];
 
   # Use the systemd-boot EFI boot loader.

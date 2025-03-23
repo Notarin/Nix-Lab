@@ -5,7 +5,12 @@
   };
 
   outputs =
-    { nixpkgs, impermanence, ... }:
+    {
+      nixpkgs,
+      self,
+      impermanence,
+      ...
+    }:
     let
       nixos_hosts = builtins.attrNames (builtins.readDir ./NixOS/host-configs);
     in
@@ -15,6 +20,7 @@
         nixpkgs.lib.nixosSystem {
           specialArgs = {
             hostName = hostName;
+            rootDir = self;
           };
           modules = [
             ./NixOS/host-configs/${hostName}/configuration.nix
