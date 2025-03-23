@@ -14,6 +14,7 @@
   programs.hyprland = {
     enable = true;
   };
+  programs.steam.enable = true;
 
   # Impermanence
   boot.initrd.postResumeCommands = lib.mkAfter ''
