@@ -19,6 +19,7 @@
   networking.wireless.iwd.enable = true;
   nixpkgs.config.allowUnfree = true;
   users.mutableUsers = false;
+  time.timeZone = "America/New_York";
 
   environment.systemPackages = with pkgs; [
     nixVersions.latest
