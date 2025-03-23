@@ -15,6 +15,7 @@
     enable = true;
   };
   programs.steam.enable = true;
+  programs.gamemode.enable = true;
 
   # Impermanence
   boot.initrd.postResumeCommands = lib.mkAfter ''
