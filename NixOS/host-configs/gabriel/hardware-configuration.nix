@@ -22,9 +22,12 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/8e4f71ac-9ff5-47a0-b9c6-d351ffa238e2";
-    fsType = "btrfs";
-    options = [ "subvol=rootfs" ];
+    device = "none";
+    fsType = "tmpfs";
+    options = [
+      "size=1G"
+      "mode=755"
+    ];
   };
 
   fileSystems."/boot" = {
@@ -46,6 +49,7 @@
     device = "/dev/disk/by-uuid/8e4f71ac-9ff5-47a0-b9c6-d351ffa238e2";
     fsType = "btrfs";
     options = [ "subvol=persistent" ];
+    neededForBoot = true;
   };
 
   swapDevices = [ ];

@@ -24,9 +24,12 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/59bbc31f-76ef-428b-bf04-b88f5352c68b";
-    fsType = "btrfs";
-    options = [ "subvol=rootfs" ];
+    device = "none";
+    fsType = "tmpfs";
+    options = [
+      "size=2G"
+      "mode=755"
+    ];
   };
 
   fileSystems."/nix" = {
@@ -45,6 +48,7 @@
     device = "/dev/disk/by-uuid/59bbc31f-76ef-428b-bf04-b88f5352c68b";
     fsType = "btrfs";
     options = [ "subvol=persistent" ];
+    neededForBoot = true;
   };
 
   fileSystems."/boot" = {
