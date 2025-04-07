@@ -1,4 +1,4 @@
-{ lib, rootDir, ... }:
+{ rootDir, ... }:
 
 {
   imports = [
@@ -11,7 +11,11 @@
   boot.loader.systemd-boot.enable = true;
 
   #Program configurations
-  programs.hyprland.enable = true;
+  programs = {
+    hyprland.enable = true;
+    steam.enable = true;
+    gamemode.enable = true;
+  };
 
   # Don't touch this
   system.stateVersion = "24.05";

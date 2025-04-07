@@ -9,39 +9,49 @@
     ];
     trusted-users = [ "notarin" ];
   };
-  networking.hostName = hostName;
   networking = {
+    hostName = hostName;
     useDHCP = true;
     networkmanager = {
       wifi.backend = "iwd";
     };
+    wireless.iwd.enable = true;
   };
-  networking.wireless.iwd.enable = true;
   nixpkgs.config.allowUnfree = true;
-  users.mutableUsers = false;
   time.timeZone = "America/New_York";
 
   environment.systemPackages = with pkgs; [
+    # By default, even unstable isn't up to date
+    # Instead there is a separate package for the latest version
     nixVersions.latest
   ];
 
-  # Common package options
-  users.defaultUserShell = pkgs.nushell;
+  # Default user options
+  users = {
+    mutableUsers = false;
+    defaultUserShell = pkgs.nushell;
+  };
 
   # Common services
-  services.openssh.enable = true;
-  services.openssh.settings.StrictModes = false;
-  services.pipewire = {
-    enable = true;
-    pulse.enable = true;
-    jack.enable = true;
-    alsa.enable = true;
+  services = {
+    openssh = {
+      enable = true;
+      settings.StrictModes = false;
+    };
+    seatd.enable = true;
+    pipewire = {
+      enable = true;
+      pulse.enable = true;
+      jack.enable = true;
+      alsa.enable = true;
+    };
   };
-  services.seatd.enable = true;
 
   programs.noisetorch.enable = true;
 
   # Generic hardware settings
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = true;
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+  };
 }
