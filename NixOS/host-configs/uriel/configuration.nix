@@ -10,7 +10,7 @@
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
 
-  #Program configurations
+  # Program configurations
   programs = {
     hyprland.enable = true;
     steam.enable = true;
