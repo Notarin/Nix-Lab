@@ -1,6 +1,10 @@
 { hostName, pkgs, ... }:
 
 {
+  imports = [
+    ./ssh-net.nix
+  ];
+
   # Common system options
   nix.settings = {
     experimental-features = [
@@ -36,7 +40,10 @@
   services = {
     openssh = {
       enable = true;
-      settings.StrictModes = false;
+      settings = {
+        PubkeyAuthentication = true;
+        PasswordAuthentication = false;
+      };
     };
     seatd.enable = true;
     pipewire = {
