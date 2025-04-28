@@ -45,6 +45,12 @@
     options = [ "subvol=nix" ];
   };
 
+  fileSystems."/home" = {
+    device = "/dev/disk/by-uuid/8e4f71ac-9ff5-47a0-b9c6-d351ffa238e2";
+    fsType = "btrfs";
+    options = [ "subvol=home" ];
+  };
+
   fileSystems."/persistent" = {
     device = "/dev/disk/by-uuid/8e4f71ac-9ff5-47a0-b9c6-d351ffa238e2";
     fsType = "btrfs";
