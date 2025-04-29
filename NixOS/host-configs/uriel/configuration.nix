@@ -5,6 +5,7 @@
     ./hardware-configuration.nix
     (rootDir + /Modules/persistence.nix)
     (rootDir + /Users/notarin.nix)
+    ./virtual-machines.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
