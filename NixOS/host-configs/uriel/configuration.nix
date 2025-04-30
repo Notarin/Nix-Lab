@@ -6,6 +6,7 @@
     (rootDir + /Modules/persistence.nix)
     (rootDir + /Users/notarin.nix)
     ./virtual-machines.nix
+    ./plex.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
