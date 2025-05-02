@@ -7,6 +7,7 @@
     (rootDir + /Users/notarin.nix)
     ./virtual-machines.nix
     ./plex.nix
+    ./gitea-runner.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
