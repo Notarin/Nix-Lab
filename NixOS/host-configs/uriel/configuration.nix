@@ -5,6 +5,7 @@
     ./hardware-configuration.nix
     (rootDir + /Modules/persistence.nix)
     (rootDir + /Users/notarin.nix)
+    (rootDir + /Users/kel.nix)
     ./virtual-machines.nix
     ./plex.nix
     ./gitea-runner.nix

@@ -55,6 +55,7 @@
   };
 
   programs.noisetorch.enable = true;
+  programs.zsh.enable = true;
 
   # Generic hardware settings
   hardware.bluetooth = {
