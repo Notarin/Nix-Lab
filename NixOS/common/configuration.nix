@@ -1,6 +1,8 @@
-{ hostName, pkgs, ... }:
-
 {
+  hostName,
+  pkgs,
+  ...
+}: {
   imports = [
     ./ssh-net.nix
   ];
@@ -11,7 +13,7 @@
       "nix-command"
       "flakes"
     ];
-    trusted-users = [ "notarin" ];
+    trusted-users = ["notarin"];
   };
   networking = {
     hostName = hostName;

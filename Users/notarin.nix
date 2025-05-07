@@ -1,6 +1,4 @@
-{ ... }:
-
-{
+{...}: {
   users.users.notarin = {
     description = "Notarin Steele";
     extraGroups = [

@@ -1,6 +1,4 @@
-{ rootDir, ... }:
-
-{
+{rootDir, ...}: {
   imports = [
     ./hardware-configuration.nix
     (rootDir + /Modules/persistence.nix)

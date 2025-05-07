@@ -5,13 +5,11 @@
   sshNetServerHost,
   config,
   ...
-}:
-
-{
+}: {
   systemd.services.sshNet = {
     enable = true;
     description = "A reverse tunnel to the SSH-Net server";
-    wantedBy = [ "multi-user.target" ];
+    wantedBy = ["multi-user.target"];
     serviceConfig = {
       User = config.users.users.notarin.name;
       Restart = "always";

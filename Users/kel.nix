@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   users.users.kel = {
     description = "Dr. Kellin";
     extraGroups = [
