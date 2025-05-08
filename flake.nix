@@ -55,7 +55,7 @@
               name = hostName;
               value = nixpkgs.lib.nixosSystem {
                 specialArgs = {
-                  inherit hostName sshNetServerHost;
+                  inherit nixos_hosts hostName sshNetServerHost;
                   sshNetPort = host.sshNetPort;
                   rootDir = self;
                 };
