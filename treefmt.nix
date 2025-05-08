@@ -8,5 +8,9 @@
       enable = true;
       package = pkgs.alejandra;
     };
+    yamlfmt = {
+      enable = true;
+      package = pkgs.yamlfmt;
+    };
   };
 }

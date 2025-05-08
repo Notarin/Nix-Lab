@@ -1,4 +1,4 @@
-{...}: {
+{config, ...}: {
   users.users.notarin = {
     description = "Notarin Steele";
     extraGroups = [
@@ -6,7 +6,7 @@
       "wheel"
     ];
     isNormalUser = true;
-    hashedPasswordFile = "/persistent/passwords/notarin";
+    hashedPasswordFile = config.sops.secrets."users/notarin".path;
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFU1sdK5nNgNhCFusMYY61FXMDD8+Hws+igIgAOb7xpg notarin@uriel"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFpUz7+oWy492j1T6es6274g3cADuQEuANx3lNEy6I7d notarin@gabriel"
