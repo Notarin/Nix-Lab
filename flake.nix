@@ -4,6 +4,7 @@
     impermanence.url = "github:nix-community/impermanence";
     flake-utils.url = "github:numtide/flake-utils";
     treefmt-nix.url = "github:numtide/treefmt-nix";
+    sops-nix.url = "github:Mic92/sops-nix";
   };
 
   outputs = {
@@ -12,6 +13,7 @@
     impermanence,
     flake-utils,
     treefmt-nix,
+    sops-nix,
     ...
   }:
     flake-utils.lib.eachDefaultSystemPassThrough (
@@ -63,6 +65,7 @@
                   ./NixOS/host-configs/${hostName}/configuration.nix
                   ./NixOS/common/configuration.nix
                   impermanence.nixosModules.impermanence
+                  sops-nix.nixosModules.sops
                 ];
               };
             }

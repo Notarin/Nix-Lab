@@ -5,6 +5,7 @@
 }: {
   imports = [
     ./ssh-net.nix
+    ./sops.nix
   ];
 
   # Common system options

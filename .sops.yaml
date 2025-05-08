@@ -1,0 +1,6 @@
+creation_rules:
+  - path_regex: ^secrets/vault.yaml$
+    key_groups:
+      - pgp:
+        age:
+          - age1am4dcpefn4dlcnwtj2g3pmcc4djwuvktl89yuy09ha54l0t3rc2sh6qudy
