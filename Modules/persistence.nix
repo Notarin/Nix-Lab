@@ -12,6 +12,7 @@
       "/var/lib/nixos"
       "/var/lib/iwd"
       "/var/lib/bluetooth"
+      "/root"
     ];
   };
 }
