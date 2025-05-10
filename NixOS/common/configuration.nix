@@ -1,4 +1,5 @@
 {
+  self,
   hostName,
   pkgs,
   ...
@@ -24,7 +25,10 @@
     };
     wireless.iwd.enable = true;
   };
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs = {
+    config.allowUnfree = true;
+    overlays = [self.overlays.topology];
+  };
   time.timeZone = "America/New_York";
 
   environment.systemPackages = with pkgs; [
