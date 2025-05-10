@@ -84,6 +84,7 @@
         topology.${system} = import nix-topology {
           inherit pkgs;
           modules = [
+            ./Topology/main.nix
             {nixosConfigurations = self.nixosConfigurations;}
           ];
         };
