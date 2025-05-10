@@ -5,6 +5,7 @@
     flake-utils.url = "github:numtide/flake-utils";
     treefmt-nix.url = "github:numtide/treefmt-nix";
     sops-nix.url = "github:Mic92/sops-nix";
+    nix-topology.url = "github:oddlama/nix-topology";
   };
 
   outputs = {
@@ -14,11 +15,17 @@
     flake-utils,
     treefmt-nix,
     sops-nix,
+    nix-topology,
     ...
   }:
     flake-utils.lib.eachDefaultSystemPassThrough (
       system: let
-        pkgs = nixpkgs.legacyPackages.${system};
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [
+            self.overlays.topology
+          ];
+        };
         treefmt-config = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
 
         # All managed hosts start reverse SSH tunnels to the sshNetServer.
@@ -57,7 +64,7 @@
               name = hostName;
               value = nixpkgs.lib.nixosSystem {
                 specialArgs = {
-                  inherit nixos_hosts hostName sshNetServerHost;
+                  inherit self nixos_hosts hostName sshNetServerHost nix-topology;
                   sshNetPort = host.sshNetPort;
                   rootDir = self;
                 };
@@ -66,12 +73,20 @@
                   ./NixOS/common/configuration.nix
                   impermanence.nixosModules.impermanence
                   sops-nix.nixosModules.sops
+                  nix-topology.nixosModules.default
                 ];
               };
             }
           )
           nixos_hosts
         );
+        overlays.topology = nix-topology.overlays.default;
+        topology.${system} = import nix-topology {
+          inherit pkgs;
+          modules = [
+            {nixosConfigurations = self.nixosConfigurations;}
+          ];
+        };
       }
     );
 }
