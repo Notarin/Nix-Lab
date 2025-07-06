@@ -58,6 +58,17 @@
     ];
   };
 
+  fileSystems."/mnt/HD2" = {
+    device = "/dev/disk/by-uuid/48475dc3-717f-457b-8bf8-49e4ceec6001";
+    fsType = "btrfs";
+  };
+
+  fileSystems."/etc/nixos" = {
+    device = "/dev/disk/by-uuid/48475dc3-717f-457b-8bf8-49e4ceec6001";
+    fsType = "btrfs";
+    options = ["subvol=NixOS"];
+  };
+
   swapDevices = [];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
