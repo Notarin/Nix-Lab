@@ -8,6 +8,7 @@
     ./virtual-machines.nix
     ./plex.nix
     ./gitea-runner.nix
+    ./paperless.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
