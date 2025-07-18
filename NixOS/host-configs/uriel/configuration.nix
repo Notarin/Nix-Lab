@@ -5,6 +5,7 @@
     (rootDir + /Modules/persistence.nix)
     (rootDir + /Users/notarin.nix)
     (rootDir + /Users/kel.nix)
+    ./nginx.nix
     ./virtual-machines.nix
     ./plex.nix
     ./gitea-runner.nix
