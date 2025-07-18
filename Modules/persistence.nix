@@ -14,6 +14,7 @@
       "/var/lib/iwd" # Needed to keep wifi passwords and settings
       "/var/lib/bluetooth" # Needed to keep bluetooth pairings
       "/root" # Could probably be done better, but keeps the root user home
+      "/srv" # Persists server data stores
     ];
   };
 }
