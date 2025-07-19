@@ -10,6 +10,7 @@
     ./plex.nix
     ./gitea-runner.nix
     ./paperless.nix
+    ./ollama.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
