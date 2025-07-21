@@ -14,11 +14,6 @@
           proxyPass = "http://localhost:" + (builtins.toString config.services.paperless.port);
         };
       };
-      "ollama.${hostname}" = {
-        locations."/" = {
-          proxyPass = "http://localhost:" + (builtins.toString config.services.ollama.port);
-        };
-      };
     };
   };
 }
