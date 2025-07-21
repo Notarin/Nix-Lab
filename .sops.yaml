@@ -1,5 +1,6 @@
 creation_rules:
-  - path_regex: ^secrets/vault.yaml$
+  # The following regex matches any file in the `secrets/` directory or a file named `vault.yaml` in any directory.
+  - path_regex: (?<secrets_dir>^secrets/)(?<secrets_filename>.*$)|(?<preceding_path>^.*)(?<local_secrets_filename>vault\.yaml)
     key_groups:
       - pgp:
         age:
