@@ -11,6 +11,7 @@
     ./gitea-runner.nix
     ./paperless.nix
     ./ollama.nix
+    ./sillytavern.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
