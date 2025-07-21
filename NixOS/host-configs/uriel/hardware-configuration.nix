@@ -69,6 +69,11 @@
     fsType = "btrfs";
   };
 
+  fileSystems."/mnt/archive" = {
+    device = "/dev/disk/by-uuid/075f12a2-6171-44ae-abb1-75f2f1b1fd54";
+    fsType = "btrfs";
+  };
+
   fileSystems."/etc/nixos" = {
     device = "/dev/disk/by-uuid/48475dc3-717f-457b-8bf8-49e4ceec6001";
     fsType = "btrfs";
