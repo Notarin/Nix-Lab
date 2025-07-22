@@ -54,6 +54,9 @@ in {
       WorkingDirectory = home;
       ExecStart = "${lib.getExe pkgs.sillytavern} --configPath ${config}";
     };
+    path = with pkgs; [
+      git # Added so you can fetch extensions
+    ];
   };
   users.users.${name} = {
     inherit name home;
