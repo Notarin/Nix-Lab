@@ -3,6 +3,20 @@
   lib,
   ...
 }: let
+  package = pkgs.sillytavern.overrideAttrs (oldAttrs: rec {
+    src = pkgs.fetchFromGitHub {
+      owner = "SillyTavern";
+      repo = "SillyTavern";
+      rev = "6217ea988879e53e19cc487802ad79a38dd7601d";
+      hash = "sha256-BHYm01XJ0w80aVUjyNqFN3kFlTYlC4CjbLL5kb6jYuE=";
+    };
+    npmDepsHash = "sha256-m3fbzhgTC71Seb/v6Bq3JEK0Zr6fvUXie50I7NTL+Rw=";
+    npmDeps = pkgs.fetchNpmDeps {
+      inherit src;
+      name = with pkgs.sillytavern; "${pname}-${version}-npm-deps";
+      hash = npmDepsHash;
+    };
+  });
   name = "sillytavern";
   home = "/srv/${name}";
   port = 5000;
@@ -52,7 +66,7 @@ in {
       User = name;
       Group = name;
       WorkingDirectory = home;
-      ExecStart = "${lib.getExe pkgs.sillytavern} --configPath ${config}";
+      ExecStart = "${lib.getExe package} --configPath ${config}";
     };
     path = with pkgs; [
       git # Added so you can fetch extensions
