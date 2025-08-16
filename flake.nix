@@ -6,6 +6,7 @@
     treefmt-nix.url = "github:numtide/treefmt-nix";
     sops-nix.url = "github:Mic92/sops-nix";
     nix-topology.url = "github:oddlama/nix-topology";
+    hayabusa.url = "github:Notarin/hayabusa";
   };
 
   outputs = {
@@ -16,6 +17,7 @@
     treefmt-nix,
     sops-nix,
     nix-topology,
+    hayabusa,
     ...
   }:
     flake-utils.lib.eachDefaultSystemPassThrough (
@@ -74,6 +76,7 @@
                   impermanence.nixosModules.impermanence
                   sops-nix.nixosModules.sops
                   nix-topology.nixosModules.default
+                  hayabusa.nixosModules.default
                 ];
               };
             }
