@@ -1,12 +1,17 @@
 # If something doesn't really have to do with the flakes configuration,
 # and is moreso stateful, e.g. editor resources, then I don't want it tracked.
 
-# Direnv likes to place its resources in this dir
+# Direnv likes to place its resources in this dir.
 /.direnv/
 
-# Nix places its builds in ./result/
+# Nix places its builds in `./result/`.
 /result
 
-# nixos-rebuild build-vm writes a qcow2 image. We almost never want
-# to git track binaries anyways, so tracking a qcow2 is incredibly unlikely.
+# `nixos-rebuild build-vm` writes a `qcow2` image. We almost never want
+# to git track binaries anyways, so wanting to track a `qcow2` is
+# incredibly unlikely.
 **/*.qcow2
+
+# Trash utilities really like making these directories.
+# Is local garbage, literally lol.
+**/.Trash-1000
