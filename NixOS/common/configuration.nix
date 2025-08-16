@@ -7,6 +7,7 @@
   imports = [
     ./ssh-net.nix
     ./sops.nix
+    ./test-vm.nix
   ];
 
   # Common system options
