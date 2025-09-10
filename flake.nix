@@ -7,6 +7,7 @@
     sops-nix.url = "github:Mic92/sops-nix";
     nix-topology.url = "github:oddlama/nix-topology";
     hayabusa.url = "github:Notarin/hayabusa";
+    snix-bot.url = "github:Notarin/Snix-Bot";
   };
 
   outputs = {
@@ -18,6 +19,7 @@
     sops-nix,
     nix-topology,
     hayabusa,
+    snix-bot,
     ...
   }:
     flake-utils.lib.eachDefaultSystemPassThrough (
@@ -66,7 +68,7 @@
               name = hostName;
               value = nixpkgs.lib.nixosSystem {
                 specialArgs = {
-                  inherit self nixos_hosts hostName sshNetServerHost nix-topology;
+                  inherit self nixos_hosts hostName sshNetServerHost nix-topology snix-bot system;
                   sshNetPort = host.sshNetPort;
                   rootDir = self;
                 };

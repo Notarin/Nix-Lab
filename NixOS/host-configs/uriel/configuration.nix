@@ -12,6 +12,7 @@
     ./paperless.nix
     ./ollama.nix
     ./sillytavern.nix
+    ./snix-bot.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
