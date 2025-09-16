@@ -7,10 +7,10 @@
     src = pkgs.fetchFromGitHub {
       owner = "SillyTavern";
       repo = "SillyTavern";
-      rev = "6217ea988879e53e19cc487802ad79a38dd7601d";
-      hash = "sha256-BHYm01XJ0w80aVUjyNqFN3kFlTYlC4CjbLL5kb6jYuE=";
+      tag = "1.13.4";
+      hash = "sha256-C1VWyowuk4w1F5u88Xcp9m3UgNmcDKEn/NSojuLGAd8=";
     };
-    npmDepsHash = "sha256-m3fbzhgTC71Seb/v6Bq3JEK0Zr6fvUXie50I7NTL+Rw=";
+    npmDepsHash = "sha256-lVG00oUzrMxIVoKqTRtkMYUmS45YEOkcepXJl4vth2w=";
     npmDeps = pkgs.fetchNpmDeps {
       inherit src;
       name = with pkgs.sillytavern; "${pname}-${version}-npm-deps";
@@ -19,7 +19,7 @@
   });
   name = "sillytavern";
   home = "/srv/${name}";
-  port = 5000;
+  port = 5111;
   config = pkgs.writers.writeYAML "config.yaml" {
     # YAML config is above
     dataRoot = "${home}/data"; # StateDir
