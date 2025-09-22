@@ -1,13 +1,15 @@
 {
-  self,
   hostName,
   pkgs,
+  modulesPath,
+  specialPkgs,
   ...
 }: {
   imports = [
     ./ssh-net.nix
     ./sops.nix
     ./test-vm.nix
+    (modulesPath + "/misc/nixpkgs/read-only.nix")
   ];
 
   # Common system options
@@ -27,8 +29,7 @@
     wireless.iwd.enable = true;
   };
   nixpkgs = {
-    config.allowUnfree = true;
-    overlays = [self.overlays.topology];
+    pkgs = specialPkgs;
   };
   time.timeZone = "America/New_York";
 

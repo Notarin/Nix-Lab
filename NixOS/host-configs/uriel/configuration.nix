@@ -1,4 +1,8 @@
-{rootDir, ...}: {
+{
+  pkgs,
+  rootDir,
+  ...
+}: {
   imports = [
     ./hardware-configuration.nix
     ./topology.nix
@@ -23,6 +27,18 @@
     hyprland.enable = true;
     steam.enable = true;
     gamemode.enable = true;
+  };
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.notarin.enableGnomeKeyring = true;
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-hyprland
+      xdg-desktop-portal-gtk
+    ];
+    config = {
+      hyprland.default = ["hyprland" "gtk"];
+    };
   };
 
   # Don't touch this
