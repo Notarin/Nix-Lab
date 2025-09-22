@@ -3,18 +3,44 @@
   lib,
   ...
 }: let
-  package = pkgs.sillytavern.overrideAttrs (oldAttrs: rec {
+  package = pkgs.buildNpmPackage (finalAttrs: {
+    pname = "sillytavern";
+    version = "1.13.4";
+
     src = pkgs.fetchFromGitHub {
       owner = "SillyTavern";
       repo = "SillyTavern";
-      tag = "1.13.4";
+      tag = finalAttrs.version;
       hash = "sha256-C1VWyowuk4w1F5u88Xcp9m3UgNmcDKEn/NSojuLGAd8=";
     };
     npmDepsHash = "sha256-lVG00oUzrMxIVoKqTRtkMYUmS45YEOkcepXJl4vth2w=";
-    npmDeps = pkgs.fetchNpmDeps {
-      inherit src;
-      name = with pkgs.sillytavern; "${pname}-${version}-npm-deps";
-      hash = npmDepsHash;
+
+    nativeBuildInputs = [pkgs.makeBinaryWrapper];
+
+    dontNpmBuild = true;
+    installPhase = ''
+      runHook preInstall
+
+      mkdir -p $out/{bin,opt}
+      cp -r . $out/opt/sillytavern
+      makeWrapper ${lib.getExe pkgs.nodejs} $out/bin/sillytavern \
+        --add-flags $out/opt/sillytavern/server.js \
+        --set-default NODE_ENV production
+
+      runHook postInstall
+    '';
+
+    meta = {
+      description = "LLM Frontend for Power Users";
+      longDescription = ''
+        SillyTavern is a user interface you can install on your computer (and Android phones) that allows you to interact with
+        text generation AIs and chat/roleplay with characters you or the community create.
+      '';
+      downloadPage = "https://github.com/SillyTavern/SillyTavern/releases";
+      homepage = "https://docs.sillytavern.app/";
+      mainProgram = "sillytavern";
+      license = lib.licenses.agpl3Only;
+      maintainers = [lib.maintainers.Notarin];
     };
   });
   name = "sillytavern";
@@ -66,7 +92,7 @@ in {
       User = name;
       Group = name;
       WorkingDirectory = home;
-      ExecStart = "${lib.getExe package} --configPath ${config}";
+      ExecStart = "${lib.getExe package} --global=false --configPath ${config}";
     };
     path = with pkgs; [
       git # Added so you can fetch extensions
