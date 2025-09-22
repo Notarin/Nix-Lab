@@ -17,6 +17,7 @@
     ./ollama.nix
     ./sillytavern.nix
     ./snix-bot.nix
+    ./vaultwarden.nix
   ];
 
   # Use the systemd-boot EFI boot loader.

@@ -11,4 +11,6 @@
 
   sops.secrets."gitea/notarin" = {};
   sops.secrets."gitea/yinyang" = {};
+
+  sops.secrets."vaultwarden/env" = {};
 }
