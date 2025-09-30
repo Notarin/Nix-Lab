@@ -1,15 +1,13 @@
 {
   hostName,
   pkgs,
-  modulesPath,
-  specialPkgs,
   ...
 }: {
   imports = [
     ./ssh-net.nix
     ./sops.nix
     ./test-vm.nix
-    (modulesPath + "/misc/nixpkgs/read-only.nix")
+    ./nixpkgs.nix
   ];
 
   # Common system options
@@ -27,9 +25,6 @@
       wifi.backend = "iwd";
     };
     wireless.iwd.enable = true;
-  };
-  nixpkgs = {
-    pkgs = specialPkgs;
   };
   time.timeZone = "America/New_York";
 

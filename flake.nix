@@ -26,7 +26,6 @@
       system: let
         pkgs = import nixpkgs {
           inherit system;
-          config.allowUnfree = true;
           overlays = [
             self.overlays.topology
           ];
@@ -72,7 +71,6 @@
                   inherit self nixos_hosts hostName sshNetServerHost nix-topology snix-bot system;
                   sshNetPort = host.sshNetPort;
                   rootDir = self;
-                  specialPkgs = pkgs;
                 };
                 modules = [
                   ./NixOS/host-configs/${hostName}/configuration.nix
