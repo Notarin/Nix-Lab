@@ -32,15 +32,8 @@
         };
         treefmt-config = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
 
-        # All managed hosts start reverse SSH tunnels to the sshNetServer.
-        # This eliminates the need to expose every host to the internet.
-        # I call this the "SSH-Net".
-        sshNetServerHost = "wogo.dev";
-        sshNetPortIndex = 2000 + 1;
-
         nixos_hosts = nixpkgs.lib.imap0 (idx: hostName: {
           inherit hostName;
-          sshNetPort = idx + sshNetPortIndex;
         }) (builtins.attrNames (builtins.readDir ./NixOS/host-configs));
       in {
         formatter.${system} = treefmt-config.config.build.wrapper;
@@ -68,8 +61,7 @@
               name = hostName;
               value = nixpkgs.lib.nixosSystem {
                 specialArgs = {
-                  inherit self nixos_hosts hostName sshNetServerHost nix-topology snix-bot system;
-                  sshNetPort = host.sshNetPort;
+                  inherit self nixos_hosts hostName nix-topology snix-bot system;
                   rootDir = self;
                 };
                 modules = [

@@ -4,7 +4,6 @@
   ...
 }: {
   imports = [
-    ./ssh-net.nix
     ./sops.nix
     ./test-vm.nix
     ./nixpkgs.nix
