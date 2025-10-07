@@ -1,4 +1,4 @@
-{...}: {
+{
   # Enable libvirt VM management
   virtualisation.libvirtd.enable = true;
   # Adding my main user to the libvirt group

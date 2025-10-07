@@ -47,59 +47,60 @@
     ...
   }: let
     systems = ["x86_64-linux"];
-    buildEachSystem = output: builtins.map (system: output system) systems;
+    buildEachSystem = output: builtins.map output systems;
     buildAllSystems = output: (
       builtins.foldl' (acc: elem: nixpkgs.lib.recursiveUpdate acc elem) {} (buildEachSystem output)
     );
-  in (buildAllSystems (
-    system: let
-      pkgs = import nixpkgs {
-        inherit system;
-        overlays = [
-          self.overlays.topology
-        ];
-      };
-      treefmt-config = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
+  in
+    buildAllSystems (
+      system: let
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [
+            self.overlays.topology
+          ];
+        };
+        treefmt-config = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
 
-      nixos_hosts = nixpkgs.lib.imap0 (idx: hostName: {
-        inherit hostName;
-      }) (builtins.attrNames (builtins.readDir ./NixOS/host-configs));
-    in {
-      formatter.${system} = treefmt-config.config.build.wrapper;
-      checks.${system}.formatting = treefmt-config.config.build.check self;
-      devShells.${system}.default = SHID.devShells.${system}.default;
-      nixosConfigurations = builtins.listToAttrs (
-        map (
-          host: let
-            hostName = host.hostName;
-          in {
-            name = hostName;
-            value = nixpkgs.lib.nixosSystem {
-              specialArgs = {
-                inherit self nixos_hosts hostName nix-topology snix-bot system;
-                rootDir = self;
+        nixos_hosts = nixpkgs.lib.imap0 (_idx: hostName: {
+          inherit hostName;
+        }) (builtins.attrNames (builtins.readDir ./NixOS/host-configs));
+      in {
+        formatter.${system} = treefmt-config.config.build.wrapper;
+        checks.${system}.formatting = treefmt-config.config.build.check self;
+        devShells.${system}.default = SHID.devShells.${system}.default;
+        nixosConfigurations = builtins.listToAttrs (
+          map (
+            host: let
+              inherit (host) hostName;
+            in {
+              name = hostName;
+              value = nixpkgs.lib.nixosSystem {
+                specialArgs = {
+                  inherit self nixos_hosts hostName nix-topology snix-bot system;
+                  rootDir = self;
+                };
+                modules = [
+                  ./NixOS/host-configs/${hostName}/configuration.nix
+                  ./NixOS/common/configuration.nix
+                  impermanence.nixosModules.impermanence
+                  sops-nix.nixosModules.sops
+                  nix-topology.nixosModules.default
+                  hayabusa.nixosModules.default
+                ];
               };
-              modules = [
-                ./NixOS/host-configs/${hostName}/configuration.nix
-                ./NixOS/common/configuration.nix
-                impermanence.nixosModules.impermanence
-                sops-nix.nixosModules.sops
-                nix-topology.nixosModules.default
-                hayabusa.nixosModules.default
-              ];
-            };
-          }
-        )
-        nixos_hosts
-      );
-      overlays.topology = nix-topology.overlays.default;
-      topology.${system} = import nix-topology {
-        inherit pkgs;
-        modules = [
-          ./Topology/main.nix
-          {nixosConfigurations = self.nixosConfigurations;}
-        ];
-      };
-    }
-  ));
+            }
+          )
+          nixos_hosts
+        );
+        overlays.topology = nix-topology.overlays.default;
+        topology.${system} = import nix-topology {
+          inherit pkgs;
+          modules = [
+            ./Topology/main.nix
+            {inherit (self) nixosConfigurations;}
+          ];
+        };
+      }
+    );
 }

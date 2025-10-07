@@ -18,7 +18,7 @@
     trusted-users = ["notarin"];
   };
   networking = {
-    hostName = hostName;
+    inherit hostName;
     useDHCP = true;
     networkmanager = {
       wifi.backend = "iwd";

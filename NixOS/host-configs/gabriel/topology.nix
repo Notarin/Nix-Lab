@@ -1,4 +1,4 @@
-{...}: {
+{
   topology.self = {
     hardware.info = "My Personal Laptop";
     interfaces.wlan0 = {
