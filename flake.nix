@@ -49,7 +49,7 @@
     systems = ["x86_64-linux"];
     buildEachSystem = output: builtins.map output systems;
     buildAllSystems = output: (
-      builtins.foldl' (acc: elem: nixpkgs.lib.recursiveUpdate acc elem) {} (buildEachSystem output)
+      builtins.foldl' nixpkgs.lib.recursiveUpdate {} (buildEachSystem output)
     );
   in
     buildAllSystems (
