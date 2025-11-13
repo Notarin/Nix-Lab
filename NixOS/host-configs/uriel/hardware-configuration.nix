@@ -80,18 +80,7 @@
     options = ["subvol=NixOS"];
   };
 
-  fileSystems."/swap" = {
-    device = "/dev/disk/by-uuid/48475dc3-717f-457b-8bf8-49e4ceec6001";
-    fsType = "btrfs";
-    options = ["subvol=swap"];
-  };
-
-  swapDevices = [
-    {
-      device = "/swap/swapfile";
-      size = 128 * 1024; # Creates an 8GB swap file
-    }
-  ];
+  swapDevices = [];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
