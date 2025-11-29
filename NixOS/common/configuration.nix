@@ -1,11 +1,11 @@
 {
   hostName,
   pkgs,
+  lib,
   ...
 }: {
   imports = [
     ./sops.nix
-    ./test-vm.nix
     ./nixpkgs.nix
   ];
 
@@ -19,7 +19,7 @@
   };
   networking = {
     inherit hostName;
-    useDHCP = true;
+    useDHCP = lib.mkForce true;
     networkmanager = {
       wifi.backend = "iwd";
     };

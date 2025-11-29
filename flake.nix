@@ -66,6 +66,7 @@
           inherit hostName;
         }) (builtins.attrNames (builtins.readDir ./NixOS/host-configs));
       in {
+        packages.x86_64-linux.installer = self.nixosConfigurations.installer.config.system.build.isoImage;
         formatter.${system} = treefmt-config.config.build.wrapper;
         checks.${system}.formatting = treefmt-config.config.build.check self;
         devShells.${system}.default = SHID.devShells.${system}.default;
