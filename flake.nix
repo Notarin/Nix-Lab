@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.follows = "home-manager/nixpkgs";
     impermanence.url = "github:nix-community/impermanence";
     crane.url = "github:ipetkov/crane";
     treefmt-nix = {
@@ -31,6 +31,17 @@
       url = "github:Notarin/SHID";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.treefmt-nix.follows = "treefmt-nix";
+    };
+    # Pinning my home-manager so I may follow this flake to its nixpkgs
+    home-manager = {
+      url = "github:Notarin/home-manager";
+      # Nuke every input besides exactly what I need
+      inputs.home-manager.follows = "";
+      inputs.nix-vscode-extensions.follows = "";
+      inputs.nixcord.follows = "";
+      inputs.snix.follows = "";
+      inputs.stylix.follows = "";
+      inputs.treefmt-nix.follows = "";
     };
   };
 
