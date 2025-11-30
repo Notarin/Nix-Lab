@@ -1,5 +1,5 @@
-{rootDir, ...}: {
-  sops.defaultSopsFile = rootDir + /secrets/vault.yaml;
+{self, ...}: {
+  sops.defaultSopsFile = self + /secrets/vault.yaml;
   sops.age.keyFile = "/persistent/unlock.age";
 
   sops.secrets."users/notarin" = {

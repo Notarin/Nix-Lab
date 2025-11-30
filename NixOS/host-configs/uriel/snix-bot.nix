@@ -1,12 +1,11 @@
 {
   pkgs,
   lib,
-  snix-bot,
-  system,
+  self,
   config,
   ...
 }: let
-  package = snix-bot.packages.${system}.default;
+  package = self.inputs.snix-bot.packages.${pkgs.stdenv.hostPlatform.system}.default;
   name = "snix-bot";
   home = "/srv/${name}";
   tokenFile = config.sops.secrets."snix-bot/token".path;

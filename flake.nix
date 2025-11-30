@@ -33,9 +33,6 @@
   outputs = {
     nixpkgs,
     self,
-    impermanence,
-    sops-nix,
-    snix-bot,
     SHID,
     ...
   }: let
@@ -50,37 +47,12 @@
         pkgs = import nixpkgs {
           inherit system;
         };
-
-        nixos_hosts = nixpkgs.lib.imap0 (_idx: hostName: {
-          inherit hostName;
-        }) (builtins.attrNames (builtins.readDir ./NixOS/host-configs));
       in {
         packages.x86_64-linux.installer = self.nixosConfigurations.installer.config.system.build.isoImage;
         formatter.${system} = pkgs.callPackage ./formatter.nix {};
         checks.${system}.formatting = pkgs.callPackage ./formatter.nix {checkDir = self;};
         devShells.${system}.default = SHID.devShells.${system}.default;
-        nixosConfigurations = builtins.listToAttrs (
-          map (
-            host: let
-              inherit (host) hostName;
-            in {
-              name = hostName;
-              value = nixpkgs.lib.nixosSystem {
-                specialArgs = {
-                  inherit self nixos_hosts hostName snix-bot system;
-                  rootDir = self;
-                };
-                modules = [
-                  ./NixOS/host-configs/${hostName}/configuration.nix
-                  ./NixOS/common/configuration.nix
-                  impermanence.nixosModules.impermanence
-                  sops-nix.nixosModules.sops
-                ];
-              };
-            }
-          )
-          nixos_hosts
-        );
+        nixosConfigurations = import ./NixOS {inherit self;};
       }
     );
 }

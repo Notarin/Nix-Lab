@@ -1,12 +1,15 @@
 {
-  hostName,
   pkgs,
   lib,
+  self,
   ...
 }: {
   imports = [
     ./sops.nix
     ./nixpkgs.nix
+
+    self.inputs.impermanence.nixosModules.impermanence
+    self.inputs.sops-nix.nixosModules.sops
   ];
 
   # Common system options
@@ -18,7 +21,6 @@
     trusted-users = ["notarin"];
   };
   networking = {
-    inherit hostName;
     useDHCP = lib.mkForce true;
     networkmanager = {
       wifi.backend = "iwd";

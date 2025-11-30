@@ -1,13 +1,13 @@
 {
   pkgs,
-  rootDir,
+  self,
   ...
 }: {
   imports = [
     ./hardware-configuration.nix
-    (rootDir + /Modules/persistence.nix)
-    (rootDir + /Users/notarin.nix)
-    (rootDir + /Users/kel.nix)
+    (self + /Modules/persistence.nix)
+    (self + /Users/notarin.nix)
+    (self + /Users/kel.nix)
     ./nginx.nix
     ./virtual-machines.nix
     ./plex.nix
