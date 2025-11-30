@@ -2,7 +2,6 @@
   inputs = {
     nixpkgs.follows = "home-manager/nixpkgs";
     impermanence.url = "github:nix-community/impermanence";
-    crane.url = "github:ipetkov/crane";
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -16,7 +15,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.treefmt-nix.follows = "";
       inputs.SHID.follows = "";
-      inputs.crane.follows = "crane";
     };
     SHID = {
       url = "github:Notarin/SHID";

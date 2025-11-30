@@ -23,11 +23,11 @@
     },
     "crane": {
       "locked": {
-        "lastModified": 1759691647,
-        "narHash": "sha256-OnyPw3KaXL909I+FNyD6jfkAP/gdL/K0iitMHxo7ieM=",
+        "lastModified": 1763938834,
+        "narHash": "sha256-j8iB0Yr4zAvQLueCZ5abxfk6fnG/SJ5JnGUziETjwfg=",
         "owner": "ipetkov",
         "repo": "crane",
-        "rev": "1e7905b1eb1b551aade75169940557b6c51ed920",
+        "rev": "d9e753122e51cee64eb8d2dddfe11148f339f5a2",
         "type": "github"
       },
       "original": {
@@ -94,7 +94,6 @@
     "root": {
       "inputs": {
         "SHID": "SHID",
-        "crane": "crane",
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "nixpkgs": [
@@ -109,9 +108,7 @@
     "snix-bot": {
       "inputs": {
         "SHID": [],
-        "crane": [
-          "crane"
-        ],
+        "crane": "crane",
         "nixpkgs": [
           "nixpkgs"
         ],
