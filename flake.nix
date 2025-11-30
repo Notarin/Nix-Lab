@@ -2,10 +2,6 @@
   inputs = {
     nixpkgs.follows = "home-manager/nixpkgs";
     impermanence.url = "github:nix-community/impermanence";
-    treefmt-nix = {
-      url = "github:numtide/treefmt-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -38,7 +34,6 @@
     nixpkgs,
     self,
     impermanence,
-    treefmt-nix,
     sops-nix,
     snix-bot,
     SHID,
@@ -55,15 +50,14 @@
         pkgs = import nixpkgs {
           inherit system;
         };
-        treefmt-config = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
 
         nixos_hosts = nixpkgs.lib.imap0 (_idx: hostName: {
           inherit hostName;
         }) (builtins.attrNames (builtins.readDir ./NixOS/host-configs));
       in {
         packages.x86_64-linux.installer = self.nixosConfigurations.installer.config.system.build.isoImage;
-        formatter.${system} = treefmt-config.config.build.wrapper;
-        checks.${system}.formatting = treefmt-config.config.build.check self;
+        formatter.${system} = pkgs.callPackage ./formatter.nix {};
+        checks.${system}.formatting = pkgs.callPackage ./formatter.nix {checkDir = self;};
         devShells.${system}.default = SHID.devShells.${system}.default;
         nixosConfigurations = builtins.listToAttrs (
           map (
