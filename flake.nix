@@ -14,6 +14,8 @@
     nix-topology = {
       url = "github:oddlama/nix-topology";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.devshell.follows = "";
+      inputs.pre-commit-hooks.follows = "";
     };
     hayabusa = {
       url = "github:Notarin/hayabusa";
@@ -23,14 +25,14 @@
     snix-bot = {
       url = "github:Notarin/Snix-Bot";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.treefmt-nix.follows = "treefmt-nix";
-      inputs.SHID.follows = "SHID";
+      inputs.treefmt-nix.follows = "";
+      inputs.SHID.follows = "";
       inputs.crane.follows = "crane";
     };
     SHID = {
       url = "github:Notarin/SHID";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.treefmt-nix.follows = "treefmt-nix";
+      inputs.treefmt-nix.follows = "";
     };
     # Pinning my home-manager so I may follow this flake to its nixpkgs
     home-manager = {
