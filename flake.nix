@@ -11,11 +11,6 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hayabusa = {
-      url = "github:Notarin/hayabusa";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.crane.follows = "crane";
-    };
     snix-bot = {
       url = "github:Notarin/Snix-Bot";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -47,7 +42,6 @@
     impermanence,
     treefmt-nix,
     sops-nix,
-    hayabusa,
     snix-bot,
     SHID,
     ...
@@ -89,7 +83,6 @@
                   ./NixOS/common/configuration.nix
                   impermanence.nixosModules.impermanence
                   sops-nix.nixosModules.sops
-                  hayabusa.nixosModules.default
                 ];
               };
             }

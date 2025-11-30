@@ -36,29 +36,6 @@
         "type": "github"
       }
     },
-    "hayabusa": {
-      "inputs": {
-        "crane": [
-          "crane"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1755375502,
-        "narHash": "sha256-w9vXC7L7IP4QLPFS1IgPOKSm7fT7W0R+NsHTdAfIupg=",
-        "owner": "Notarin",
-        "repo": "hayabusa",
-        "rev": "1d6b8cfd301d60ff9f6946970b51818c036083b0",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Notarin",
-        "repo": "hayabusa",
-        "type": "github"
-      }
-    },
     "home-manager": {
       "inputs": {
         "home-manager": [],
@@ -118,7 +95,6 @@
       "inputs": {
         "SHID": "SHID",
         "crane": "crane",
-        "hayabusa": "hayabusa",
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "nixpkgs": [

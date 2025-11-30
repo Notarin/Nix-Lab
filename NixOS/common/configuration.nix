@@ -55,7 +55,6 @@
       jack.enable = true;
       alsa.enable = true;
     };
-    hayabusa.enable = true;
   };
 
   programs.noisetorch.enable = true;
