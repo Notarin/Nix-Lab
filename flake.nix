@@ -11,12 +11,6 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-topology = {
-      url = "github:oddlama/nix-topology";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.devshell.follows = "";
-      inputs.pre-commit-hooks.follows = "";
-    };
     hayabusa = {
       url = "github:Notarin/hayabusa";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -53,7 +47,6 @@
     impermanence,
     treefmt-nix,
     sops-nix,
-    nix-topology,
     hayabusa,
     snix-bot,
     SHID,
@@ -69,9 +62,6 @@
       system: let
         pkgs = import nixpkgs {
           inherit system;
-          overlays = [
-            self.overlays.topology
-          ];
         };
         treefmt-config = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
 
@@ -91,7 +81,7 @@
               name = hostName;
               value = nixpkgs.lib.nixosSystem {
                 specialArgs = {
-                  inherit self nixos_hosts hostName nix-topology snix-bot system;
+                  inherit self nixos_hosts hostName snix-bot system;
                   rootDir = self;
                 };
                 modules = [
@@ -99,7 +89,6 @@
                   ./NixOS/common/configuration.nix
                   impermanence.nixosModules.impermanence
                   sops-nix.nixosModules.sops
-                  nix-topology.nixosModules.default
                   hayabusa.nixosModules.default
                 ];
               };
@@ -107,14 +96,6 @@
           )
           nixos_hosts
         );
-        overlays.topology = nix-topology.overlays.default;
-        topology.${system} = import nix-topology {
-          inherit pkgs;
-          modules = [
-            ./Topology/main.nix
-            {inherit (self) nixosConfigurations;}
-          ];
-        };
       }
     );
 }

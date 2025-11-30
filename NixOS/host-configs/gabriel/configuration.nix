@@ -1,7 +1,6 @@
 {rootDir, ...}: {
   imports = [
     ./hardware-configuration.nix
-    ./topology.nix
     (rootDir + /Modules/persistence.nix)
     (rootDir + /Users/notarin.nix)
   ];
