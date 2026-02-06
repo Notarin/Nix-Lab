@@ -5,15 +5,17 @@
 }: let
   package = pkgs.buildNpmPackage (finalAttrs: {
     pname = "sillytavern";
-    version = "1.14.0";
+    version = "1.15.0";
 
     src = pkgs.fetchFromGitHub {
       owner = "SillyTavern";
       repo = "SillyTavern";
       tag = finalAttrs.version;
-      hash = "sha256-5bml7PwmlfJag8DzbR5qdNJ6ddKmZsEUD155VwkJhjI=";
+      hash = "sha256-yx1vPnKxhQTRnBDOTR4jEcDaU8DDDOW7P98LI3hOTHc=";
     };
-    npmDepsHash = "sha256-cqS8UFyXNql/SE1nrWhZlIXhz0SO3JUSDThsfAOHP7E=";
+    npmDepsHash = "sha256-fKFt10eg72C5wBeAQ6SQH6mBF1Lf/EADN/wCrHkDf3U=";
+
+    nodejs = pkgs.nodejs_22;
 
     nativeBuildInputs = [pkgs.makeBinaryWrapper];
 
