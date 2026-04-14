@@ -15,4 +15,7 @@
       extraOptions = "--no-mouse";
     };
   };
+  specialisation.plainTTY.configuration = {
+    services.kmscon.enable = lib.mkForce false;
+  };
 }
