@@ -1,4 +1,8 @@
-{self, ...}: {
+{
+  pkgs,
+  self,
+  ...
+}: {
   imports = [
     ./hardware-configuration.nix
     (self + /Modules/persistence.nix)
@@ -13,6 +17,18 @@
     hyprland.enable = true;
     steam.enable = true;
     gamemode.enable = true;
+  };
+  services = {
+    kmscon = {
+      enable = true;
+      fonts = [
+        {
+          name = "FiraCode Nerd Font";
+          package = pkgs.nerd-fonts.fira-code;
+        }
+      ];
+      extraOptions = "--no-mouse";
+    };
   };
 
   # Don't touch this
