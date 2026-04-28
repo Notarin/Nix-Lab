@@ -1,26 +1,5 @@
 {
   "nodes": {
-    "SHID": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "treefmt-nix": []
-      },
-      "locked": {
-        "lastModified": 1758028298,
-        "narHash": "sha256-mScxUQin5IysAAKiamqYeUIza6b3HPbJ6AdtmvSbg/4=",
-        "owner": "Notarin",
-        "repo": "SHID",
-        "rev": "7ec276ab5c43a3aa367b9ab9f85460df4abf8794",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Notarin",
-        "repo": "SHID",
-        "type": "github"
-      }
-    },
     "crane": {
       "locked": {
         "lastModified": 1757183466,
@@ -132,7 +111,6 @@
     },
     "root": {
       "inputs": {
-        "SHID": "SHID",
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "nixpkgs": [
