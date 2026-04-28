@@ -24,9 +24,7 @@
       inputs.home-manager.follows = "";
       inputs.nix-vscode-extensions.follows = "";
       inputs.nixcord.follows = "";
-      inputs.snix.follows = "";
       inputs.stylix.follows = "";
-      inputs.treefmt-nix.follows = "";
     };
   };
 
