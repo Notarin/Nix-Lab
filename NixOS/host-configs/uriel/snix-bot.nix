@@ -16,16 +16,20 @@ in {
   };
   systemd.services.${name} = {
     wantedBy = ["multi-user.target"];
+    wants = ["network-online.target"];
+    after = ["network-online.target"];
     description = "The Nix discord bot.";
     serviceConfig = {
       Type = "simple";
       User = name;
       Group = name;
       WorkingDirectory = home;
-      ExecStart = lib.getExe (pkgs.writers.writeBashBin "snix-bot" ''
-        export TOKEN="$(cat ${tokenFile})"
-        ${lib.getExe package}
-      '');
+      ExecStart = lib.getExe (
+        pkgs.writers.writeBashBin "snix-bot" ''
+          export TOKEN="$(cat ${tokenFile})"
+          ${lib.getExe package}
+        ''
+      );
     };
     path = [];
   };
