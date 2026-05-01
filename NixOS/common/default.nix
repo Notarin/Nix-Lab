@@ -7,6 +7,7 @@
   imports = [
     ./sops.nix
     ./nixpkgs.nix
+    ./deny_vesktop_gain_control.nix
 
     self.inputs.impermanence.nixosModules.impermanence
     self.inputs.sops-nix.nixosModules.sops
