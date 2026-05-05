@@ -1,6 +1,6 @@
 {
   services.plex = {
-    enable = true;
+    enable = false;
     dataDir = "/srv/plex";
     group = "users";
   };

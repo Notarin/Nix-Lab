@@ -1,6 +1,6 @@
 {config, ...}: {
   services.paperless = {
-    enable = true;
+    enable = false;
     dataDir = "/srv/paperless";
     port = 28981;
     address = "0.0.0.0";

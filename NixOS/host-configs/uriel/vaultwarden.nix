@@ -1,6 +1,6 @@
 {config, ...}: {
   services.vaultwarden = {
-    enable = true;
+    enable = false;
     environmentFile = config.sops.secrets."vaultwarden/env".path;
   };
   environment.persistence."/persistent" = {
