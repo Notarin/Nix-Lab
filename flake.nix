@@ -29,18 +29,18 @@
     ...
   }: let
     systems = ["x86_64-linux"];
-    buildAllSystems = output: builtins.foldl' nixpkgs.lib.recursiveUpdate {} (builtins.map output systems);
+    buildAllSystems = output: builtins.foldl' nixpkgs.lib.recursiveUpdate {} (map output systems);
   in
-    buildAllSystems (
+    nixpkgs.lib.recursiveUpdate (buildAllSystems (
       system: let
-        pkgs = import nixpkgs {
-          inherit system;
-        };
+        pkgs = nixpkgs.legacyPackages.${system};
       in {
-        packages.x86_64-linux.installer = self.nixosConfigurations.installer.config.system.build.isoImage;
+        packages.${system}.sillytavern = pkgs.callPackage ./packages/sillytavern.nix {};
         formatter.${system} = pkgs.callPackage ./formatter.nix {};
         checks.${system}.formatting = pkgs.callPackage ./formatter.nix {checkDir = self;};
         nixosConfigurations = import ./NixOS {inherit self;};
       }
-    );
+    )) {
+      packages.x86_64-linux.installer = self.nixosConfigurations.installer.config.system.build.isoImage;
+    };
 }

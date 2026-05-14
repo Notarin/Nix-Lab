@@ -1,124 +1,131 @@
 {
   pkgs,
   lib,
+  self,
+  config,
+  modulesPath,
   ...
-}: let
-  package = pkgs.buildNpmPackage (finalAttrs: {
-    pname = "sillytavern";
-    version = "1.18.0";
+}: {
+  disabledModules = ["${modulesPath}/services/web-apps/sillytavern.nix"];
 
-    src = pkgs.fetchFromGitHub {
-      owner = "SillyTavern";
-      repo = "SillyTavern";
-      tag = finalAttrs.version;
-      hash = "sha256-1FDqbV+t9JF93aTgy7Hnwe4lCJZHooHw0J3zOsCZWDA=";
+  options.services.sillytavern = {
+    enable = (lib.mkEnableOption "SillyTavern") // {default = true;}; # True by default is a temporary fix. Will be undone later.
+    config = lib.mkOption {
+      type = with lib.types; nullOr attrs; # I *could* typecheck it down to the individual field of sillytaverns config, but nah.
+      description = "An attrSet of the config values passed to sillytavern.";
     };
-    npmDepsHash = "sha256-jDySPn354gh1gFI8I2apGmXDxOz4d4STfJX+iFVFhdg=";
+    stateDir = lib.mkOption {
+      type = lib.types.externalPath;
+      description = "Directory holding stateful data for sillytavern.";
+      default = "/var/lib/sillytavern";
+      example = "/srv/sillytavern";
+    };
+    configFile = lib.mkOption {
+      type = lib.types.path;
+      default = pkgs.writers.writeYAML "config.yaml" config.services.sillytavern.config;
+      description = "Path to the SillyTavern configuration file.";
+    };
+    gitPackage = lib.mkPackageOption pkgs "gitMinimal" {};
+    package = lib.mkPackageOption pkgs "sillytavern" {};
+  };
 
-    nodejs = pkgs.nodejs_22;
+  config = lib.mkIf config.services.sillytavern.enable {
+    systemd.services.sillytavern = {
+      wantedBy = ["multi-user.target"];
+      wants = ["network-online.target"];
+      after = ["network-online.target"];
+      description = "SillyTavern local server";
+      serviceConfig = {
+        Type = "simple";
+        User = config.users.users.sillytavern.name;
+        Group = config.users.groups.sillytavern.name;
+        ExecStart = "${lib.getExe config.services.sillytavern.package} --global=false --configPath ${config.services.sillytavern.configFile}";
+        Restart = "always";
 
-    nativeBuildInputs = [pkgs.makeBinaryWrapper];
-
-    dontNpmBuild = true;
-    installPhase = ''
-      runHook preInstall
-
-      mkdir -p $out/{bin,opt}
-      cp -r . $out/opt/sillytavern
-      makeWrapper ${lib.getExe pkgs.nodejs} $out/bin/sillytavern \
-        --add-flags $out/opt/sillytavern/server.js \
-        --set-default NODE_ENV production
-
-      runHook postInstall
+        CapabilityBoundingSet = [""];
+        LockPersonality = true;
+        NoNewPrivileges = true;
+        PrivateDevices = true;
+        PrivateTmp = true;
+        ProtectClock = true;
+        ProtectControlGroups = "strict";
+        ProtectHostname = true;
+        ProtectKernelLogs = true;
+        ProtectKernelModules = true;
+        ProtectKernelTunables = true;
+        ProtectProc = "invisible";
+        ProtectSystem = "strict";
+        ReadWritePaths = config.services.sillytavern.stateDir;
+      };
+      path = [
+        config.services.sillytavern.gitPackage # Added so you can fetch extensions
+      ];
+    };
+    users.users.sillytavern = {
+      name = "sillytavern";
+      home = config.services.sillytavern.stateDir;
+      description = "SillyTavern server user";
+      isSystemUser = true;
+      group = config.users.groups.sillytavern.name;
+      createHome = true;
+      homeMode = "755"; # Readable by everyone, writable by user
+      shell = pkgs.shadow; # Disables shell access
+    };
+    users.groups.sillytavern = {};
+    networking.extraHosts = lib.mkIf config.services.nginx.enable ''
+      127.0.0.1 sillytavern
+      ::1 sillytavern
     '';
-
-    meta = {
-      description = "LLM Frontend for Power Users";
-      longDescription = ''
-        SillyTavern is a user interface you can install on your computer (and Android phones) that allows you to interact with
-        text generation AIs and chat/roleplay with characters you or the community create.
-      '';
-      downloadPage = "https://github.com/SillyTavern/SillyTavern/releases";
-      homepage = "https://docs.sillytavern.app/";
-      mainProgram = "sillytavern";
-      license = lib.licenses.agpl3Only;
-      maintainers = [lib.maintainers.Notarin];
+    services.nginx = {
+      enable = true;
+      virtualHosts.sillytavern = {
+        locations."/" = {
+          proxyPass = "http://localhost:${toString config.services.sillytavern.config.port}";
+        };
+      };
     };
-  });
-  name = "sillytavern";
-  home = "/srv/${name}";
-  port = 5111;
-  config = pkgs.writers.writeYAML "config.yaml" {
-    # YAML config is above
-    dataRoot = "${home}/data"; # StateDir
-    listen = false; # Disable external listening
-    protocol = {
-      ipv4 = true;
-      ipv6 = true; # IPv6 is disabled by default
-    };
-    dnsPreferIPv6 = true;
-    browserLaunch = {
-      enabled = false;
-    };
-    inherit port;
-    whitelistMode = true; # Not needed due to firewall, but could be useful eventually
-    whitelist = [
-      "127.0.0.1"
-      "::1"
-    ];
-    basicAuthMode = false; # Might use later for public sillytavern
-    enableUserAccounts = false; # Might use if I go public sillytavern
-    logging = {
-      enableAccessLog = true; # Default is true, but I like to have it here if I want to configure it
-      minLogLevel = 0; # 0 = TRACE, 1 = INFO, 2 = WARN, 3 = ERROR
-    };
-    thumbnails = {
-      enabled = true; # Default is true, but I like to have it here if I want to configure it
-      format = "png"; # Default is jpg
-    };
-    whitelistImportDomains = [
-      "localhost"
-      "cdn.discordapp.com"
-      "files.catbox.moe"
-      "raw.githubusercontent.com"
-      "char-archive.evulid.cc"
-    ];
-    enableServerPlugins = false; # I may change in the future
-
-    allowKeysExposure = true;
-  };
-in {
-  systemd.services.${name} = {
-    wantedBy = ["multi-user.target"];
-    description = "SillyTavern local server";
-    serviceConfig = {
-      Type = "simple";
-      User = name;
-      Group = name;
-      WorkingDirectory = home;
-      ExecStart = "${lib.getExe package} --global=false --configPath ${config}";
-    };
-    path = with pkgs; [
-      git # Added so you can fetch extensions
-    ];
-  };
-  users.users.${name} = {
-    inherit name home;
-    description = "SillyTavern server user";
-    isSystemUser = true;
-    group = name;
-    createHome = true;
-    homeMode = "755"; # Readable by everyone, writable by user
-    shell = pkgs.shadow; # Disables shell access
-  };
-  users.groups.${name} = {};
-  networking.extraHosts = ''
-    127.0.0.1 ${name}
-    ::1 ${name}
-  '';
-  services.nginx.virtualHosts."${name}" = {
-    locations."/" = {
-      proxyPass = "http://localhost:${builtins.toString port}";
+    services.sillytavern = {
+      gitPackage = pkgs.git; # Sometimes I need to manually use git, and I don't wanna find out a feature is missing.
+      package = self.packages.${pkgs.stdenv.system}.sillytavern; # Use my custom not fucked up derivation for sillytavern.
+      stateDir = "/srv/sillytavern";
+      config = {
+        # YAML config is above
+        dataRoot = "${config.services.sillytavern.stateDir}/data"; # StateDir
+        listen = false; # Disable external listening
+        protocol = {
+          ipv4 = true;
+          ipv6 = true; # IPv6 is disabled by default
+        };
+        dnsPreferIPv6 = true;
+        browserLaunch = {
+          enabled = false;
+        };
+        port = 5111;
+        whitelistMode = true; # Not needed due to firewall, but could be useful eventually
+        whitelist = [
+          "127.0.0.1"
+          "::1"
+        ];
+        basicAuthMode = false; # Might use later for public sillytavern
+        enableUserAccounts = false; # Might use if I go public sillytavern
+        logging = {
+          enableAccessLog = true; # Default is true, but I like to have it here if I want to configure it
+          minLogLevel = 0; # 0 = TRACE, 1 = INFO, 2 = WARN, 3 = ERROR
+        };
+        thumbnails = {
+          enabled = true; # Default is true, but I like to have it here if I want to configure it
+          format = "png"; # Default is jpg
+        };
+        whitelistImportDomains = [
+          "localhost"
+          "cdn.discordapp.com"
+          "files.catbox.moe"
+          "raw.githubusercontent.com"
+          "char-archive.evulid.cc"
+        ];
+        enableServerPlugins = false; # I may change in the future
+        allowKeysExposure = true;
+      };
     };
   };
 }
