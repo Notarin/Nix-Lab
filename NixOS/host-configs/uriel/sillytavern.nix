@@ -3,10 +3,9 @@
   lib,
   self,
   config,
-  modulesPath,
   ...
 }: {
-  disabledModules = ["${modulesPath}/services/web-apps/sillytavern.nix"];
+  disabledModules = ["services/web-apps/sillytavern.nix"];
 
   options.services.sillytavern = {
     enable = (lib.mkEnableOption "SillyTavern") // {default = true;}; # True by default is a temporary fix. Will be undone later.
