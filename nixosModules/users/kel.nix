@@ -1,12 +1,12 @@
 {
   pkgs,
   config,
+  fn,
   ...
 }: {
   users.users.kel = {
+    enable = fn.ifUser config.users.users.kel.name true;
     description = "Dr. Kellin";
-    extraGroups = [
-    ];
     isNormalUser = true;
     hashedPasswordFile = config.sops.secrets."users/kel".path;
     shell = pkgs.zsh;

@@ -1,19 +1,31 @@
 {
   pkgs,
   lib,
-  self,
   ...
 }: {
   imports = [
+    ./services
+    ./users
+    ./disk.nix
+    ./functions.nix
+    ./hardware.nix
+    ./hostname.nix
+    ./hosts.nix
+    ./hyprland.nix
+    ./iso.nix
+    ./kmscon.nix
+    ./persistence.nix
     ./sops.nix
-    ./nixpkgs.nix
-    ./deny_vesktop_gain_control.nix
-
-    self.inputs.impermanence.nixosModules.impermanence
-    self.inputs.sops-nix.nixosModules.sops
+    ./steam.nix
+    ./types.nix
   ];
 
-  # Common system options
+  system.stateVersion = "24.05";
+  boot.loader.systemd-boot.enable = true;
+  hardware.enableRedistributableFirmware = lib.mkDefault true;
+  nixpkgs = {
+    config.allowUnfree = true;
+  };
   nix.settings = {
     experimental-features = [
       "nix-command"
@@ -30,10 +42,10 @@
   };
   time.timeZone = "America/New_York";
 
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = [
     # By default, even unstable isn't up to date
     # Instead there is a separate package for the latest version
-    nixVersions.latest
+    pkgs.nixVersions.latest
   ];
 
   # Default user options
@@ -41,28 +53,7 @@
     mutableUsers = false;
     defaultUserShell = pkgs.nushell;
   };
-
-  # Common services
-  services = {
-    openssh = {
-      enable = true;
-      settings = {
-        PubkeyAuthentication = true;
-        PasswordAuthentication = false;
-      };
-    };
-    seatd.enable = true;
-    pipewire = {
-      enable = true;
-      pulse.enable = true;
-      jack.enable = true;
-      alsa.enable = true;
-    };
-  };
-
-  programs.noisetorch.enable = true;
   programs.zsh.enable = true;
-
   # Generic hardware settings
   hardware.bluetooth = {
     enable = true;

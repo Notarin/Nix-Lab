@@ -38,9 +38,32 @@
         packages.${system}.sillytavern = pkgs.callPackage ./packages/sillytavern.nix {};
         formatter.${system} = pkgs.callPackage ./formatter.nix {};
         checks.${system}.formatting = pkgs.callPackage ./formatter.nix {checkDir = self;};
-        nixosConfigurations = import ./NixOS {inherit self;};
       }
     )) {
       packages.x86_64-linux.installer = self.nixosConfigurations.installer.config.system.build.isoImage;
+      nixosConfigurations = {
+        uriel = nixpkgs.lib.nixosSystem {
+          specialArgs = {inherit self;};
+          modules = [
+            ./nixosModules
+            {hostname = "uriel";}
+          ];
+        };
+        gabriel = nixpkgs.lib.nixosSystem {
+          specialArgs = {inherit self;};
+          modules = [
+            ./nixosModules
+            {hostname = "gabriel";}
+          ];
+        };
+        installer = nixpkgs.lib.nixosSystem {
+          specialArgs = {inherit self;};
+          modules = [
+            "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+            ./nixosModules
+            {hostname = "installer";}
+          ];
+        };
+      };
     };
 }
