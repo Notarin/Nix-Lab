@@ -8,7 +8,7 @@
   disabledModules = ["services/web-apps/sillytavern.nix"];
 
   options.services.sillytavern = {
-    enable = (lib.mkEnableOption "SillyTavern") // {default = true;}; # True by default is a temporary fix. Will be undone later.
+    enable = lib.mkEnableOption "SillyTavern"; # True by default is a temporary fix. Will be undone later.
     config = lib.mkOption {
       type = with lib.types; nullOr attrs; # I *could* typecheck it down to the individual field of sillytaverns config, but nah.
       description = "An attrSet of the config values passed to sillytavern.";

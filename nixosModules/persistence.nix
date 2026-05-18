@@ -1,0 +1,30 @@
+{
+  self,
+  lib,
+  config,
+  ...
+}: {
+  imports = [self.inputs.impermanence.nixosModules.impermanence];
+  environment.persistence."/persistent" =
+    lib.mkIf (
+      if (config.hosts.self.diskLayout != null)
+      then config.hosts.self.diskLayout.impermanent
+      else false
+    ) {
+      hideMounts = true;
+      files = [
+        "/etc/machine-id" # Used for various inter-pc communication purposes
+        # All these keys are used to persist SSH identity
+        "/etc/ssh/ssh_host_rsa_key"
+        "/etc/ssh/ssh_host_rsa_key.pub"
+        "/etc/ssh/ssh_host_ed25519_key"
+        "/etc/ssh/ssh_host_ed25519_key.pub"
+      ];
+      directories = [
+        "/var/lib/nixos" # Needed for uid persistence
+        "/var/lib/iwd" # Needed to keep wifi passwords and settings
+        "/var/lib/bluetooth" # Needed to keep bluetooth pairings
+        "/srv" # Persists server data stores
+      ];
+    };
+}

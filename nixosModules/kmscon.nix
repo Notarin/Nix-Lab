@@ -1,9 +1,10 @@
 {
   pkgs,
   lib,
+  fn,
   ...
 }: {
-  services = {
+  services = fn.ifTag "graphicalTTY" {
     kmscon = {
       enable = true;
       fonts = [
@@ -15,7 +16,7 @@
       extraOptions = "--no-mouse";
     };
   };
-  specialisation.plainTTY.configuration = {
+  specialisation.plainTTY.configuration = fn.ifTag "graphicalTTY" {
     services.kmscon.enable = lib.mkForce false;
   };
 }

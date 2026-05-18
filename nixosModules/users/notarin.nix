@@ -1,5 +1,10 @@
-{config, ...}: {
+{
+  config,
+  fn,
+  ...
+}: {
   users.users.notarin = {
+    enable = fn.ifUser config.users.users.notarin.name true;
     description = "Notarin Steele";
     extraGroups = [
       "networkmanager"
