@@ -54,6 +54,13 @@
       neededForBoot = true;
     };
 
+    fileSystems."/var/lib" = fn.ifHost "uriel" {
+      device = "/dev/disk/by-uuid/${config.hosts.self.diskLayout.primary}";
+      fsType = "btrfs";
+      options = ["subvol=serviceState"];
+      neededForBoot = true;
+    };
+
     # External HDD on Uriel
     fileSystems."/mnt/HD2" = fn.ifHost "uriel" {
       device = "/dev/disk/by-uuid/48475dc3-717f-457b-8bf8-49e4ceec6001";
