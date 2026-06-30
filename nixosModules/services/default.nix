@@ -4,6 +4,7 @@
     ./quest.nix
     ./sillytavern.nix
     ./snix-bot.nix
+    ./soft-serve.nix
   ];
 
   services = {
