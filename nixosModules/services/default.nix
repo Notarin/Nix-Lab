@@ -1,5 +1,6 @@
 {fn, ...}: {
   imports = [
+    ./gerrit.nix
     ./nginx.nix
     ./quest.nix
     ./sillytavern.nix
