@@ -45,6 +45,7 @@
         user-id-claim = "preferred_username";
         code-challenge-method = "S256";
         trusted-proxy-ip = "127.0.0.1";
+        whitelist-domain = "hl.squishcat.net";
       };
     };
 
@@ -103,24 +104,30 @@
             extraConfig = ''
               auth_request /oauth2/auth;
               error_page 401 = @oauth2_signin;
-              auth_request_set $user $upstream_http_x_auth_request_preferred_username;
-              auth_request_set $email $upstream_http_x_auth_request_email;
 
-              proxy_set_header X-Forwarded-User $user;
+              auth_request_set $preferred_user $upstream_http_x_auth_request_preferred_username;
+              auth_request_set $email $upstream_http_x_auth_request_email;
+              auth_request_set $token $upstream_http_x_auth_request_access_token;
+
+              proxy_set_header X-Forwarded-User $preferred_user;
               proxy_set_header X-Email $email;
-              auth_request_set $token  $upstream_http_x_auth_request_access_token;
-              proxy_set_header X-Forwarded-User $user;
               proxy_set_header X-Access-Token $token;
+
               auth_request_set $auth_cookie $upstream_http_set_cookie;
-              add_header Set-Cookie $auth_cookie;
               auth_request_set $auth_cookie_name_upstream_1 $upstream_cookie_auth_cookie_name_1;
-              if ($auth_cookie ~* "(; .*)") {
-              	set $auth_cookie_name_0 $auth_cookie;
-              	set $auth_cookie_name_1 "auth_cookie_name_1=$auth_cookie_name_upstream_1$1";
+
+              if ($auth_cookie != "") {
+                add_header Set-Cookie $auth_cookie;
               }
+
+              if ($auth_cookie ~* "(; .*)") {
+                set $auth_cookie_name_0 $auth_cookie;
+                set $auth_cookie_name_1 "auth_cookie_name_1=$auth_cookie_name_upstream_1$1";
+              }
+
               if ($auth_cookie_name_upstream_1) {
-              	add_header Set-Cookie $auth_cookie_name_0;
-              	add_header Set-Cookie $auth_cookie_name_1;
+                add_header Set-Cookie $auth_cookie_name_0;
+                add_header Set-Cookie $auth_cookie_name_1;
               }
             '';
           };
