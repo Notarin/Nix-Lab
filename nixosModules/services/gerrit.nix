@@ -141,19 +141,6 @@
     };
   };
 
-  #security.acme = {
-  #	acceptTerms = true;
-  #	defaults.email = "drkellinbox@gmail.com"; # might have to use mine but idkkk
-  #	certs = {
-  #		"gerrit" = {
-  #			domain = "hl.squishcat.net";
-  #			group = "nginx";
-  #			dnsProvider = "cloudflare";
-  #			credentialsFile = config.sops.secrets."cloudflare-api-token".path;
-  #		};
-  #	};
-  #};
-
   networking.firewall = {
     allowedTCPPorts = [80 29418 443];
   };
