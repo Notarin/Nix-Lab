@@ -1,6 +1,6 @@
 {fn, ...}: {
   imports = [
-    ./gerrit.nix
+    ./HardLight
     ./nginx.nix
     ./quest.nix
     ./sillytavern.nix
