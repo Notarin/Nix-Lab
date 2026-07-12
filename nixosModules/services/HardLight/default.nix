@@ -1,5 +1,6 @@
 {
   imports = [
+    ./forgejo
     ./gerrit
     ./wiki
   ];
