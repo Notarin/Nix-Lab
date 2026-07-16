@@ -21,7 +21,9 @@
         domain = "*.squishcat.net";
         group = "nginx";
         dnsProvider = "cloudflare";
-        credentialsFile = config.sops.secrets."cloudflare-api-token".path;
+        credentialFiles = {
+          CLOUDFLARE_API_KEY_FILE = config.sops.secrets."cloudflare-api-token".path;
+        };
       };
     };
   };
