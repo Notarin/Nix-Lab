@@ -13,6 +13,7 @@
       settings = {
         auth = {
           type = "OAUTH";
+          gitBasicAuthPolicy = "HTTP";
         };
         gerrit.canonicalWebUrl = "https://hl.squishcat.net/";
         httpd.listenUrl = "proxy-https://127.0.0.1:8080/";
@@ -52,6 +53,18 @@
         oauth = builtins.fetchurl {
           url = "https://gerrit-ci.gerritforge.com/job/plugin-oauth-bazel-stable-3.14/lastSuccessfulBuild/artifact/bazel-bin/plugins/oauth/oauth.jar";
           sha256 = "sha256:1scn55lchyiia37n9jvgh6yl9n98cbjld2lwhm6fddjb4icvlhl9";
+        };
+        avatars-gravatar = builtins.fetchurl {
+          url = "https://gerrit-ci.gerritforge.com/job/plugin-avatars-gravatar-bazel-master-stable-3.14/lastSuccessfulBuild/artifact/bazel-bin/plugins/avatars-gravatar/avatars-gravatar.jar";
+          sha256 = "sha256:196d6wzxq5h2jnjfy5p6xz6c3h667plq1lv3a40qnri8kj93ny03";
+        };
+        ref-copy = builtins.fetchurl {
+          url = "https://gerrit-ci.gerritforge.com/job/plugin-ref-copy-bazel-main-master/lastSuccessfulBuild/artifact/bazel-bin/plugins/ref-copy/ref-copy.jar";
+          sha256 = "sha256:1bpqmf05c9j4gs647y707lxxw9pqvz8wi2r36jamdsiq0bmz9sbh";
+        };
+        menuextender = builtins.fetchurl {
+          url = "https://gerrit-ci.gerritforge.com/job/plugin-menuextender-bazel-master-master/lastSuccessfulBuild/artifact/bazel-bin/plugins/menuextender/menuextender.jar";
+          sha256 = "sha256:02c6c13mdi25zbmy3v7d7lssh50bpsb6ch5rbgvmfdhx2km4yi99";
         };
       };
     };
