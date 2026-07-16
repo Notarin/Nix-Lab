@@ -77,6 +77,11 @@
           "/" = {
             proxyPass = "http://127.0.0.1:8080";
             extraConfig = ''
+              # Prevent killing large git clones
+              proxy_buffering off;
+              proxy_read_timeout 8000;
+              proxy_send_timeout 8000;
+
               proxy_set_header Host              $host;
               proxy_set_header X-Real-IP         $remote_addr;
               proxy_set_header X-Forwarded-Proto $scheme;
