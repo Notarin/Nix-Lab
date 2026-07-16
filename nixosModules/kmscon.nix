@@ -1,5 +1,4 @@
 {
-  pkgs,
   lib,
   fn,
   ...
@@ -7,12 +6,13 @@
   services = fn.ifTag "graphicalTTY" {
     kmscon = {
       enable = true;
-      fonts = [
-        {
-          name = "FiraCode Nerd Font";
-          package = pkgs.nerd-fonts.fira-code;
-        }
-      ];
+      # TODO: Reconfigure this to the newer schema
+      # fonts = [
+      #   {
+      #     name = "FiraCode Nerd Font";
+      #     package = pkgs.nerd-fonts.fira-code;
+      #   }
+      # ];
       extraOptions = "--no-mouse";
     };
   };
