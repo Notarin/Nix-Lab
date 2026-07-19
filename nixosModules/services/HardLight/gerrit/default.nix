@@ -15,6 +15,7 @@
           type = "OAUTH";
           gitBasicAuthPolicy = "HTTP";
         };
+        oauth.allowRegisterNewEmail = true;
         gerrit.canonicalWebUrl = "https://hl.squishcat.net/";
         httpd.listenUrl = "proxy-https://127.0.0.1:8080/";
         sshd.listenAddress = "*:29418";
