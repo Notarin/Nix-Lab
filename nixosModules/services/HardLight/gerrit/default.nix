@@ -71,6 +71,10 @@
           url = "https://gerrit-ci.gerritforge.com/job/plugin-reviewers-bazel-master/lastSuccessfulBuild/artifact/bazel-bin/plugins/reviewers/reviewers.jar";
           sha256 = "sha256:15nq7jwxscdv0x3b2hacxpl7hxah29zf3cmbcgwb2fd62pnxyrs6";
         };
+        admin-console = builtins.fetchurl {
+          url = "https://gerrit-ci.gerritforge.com/job/plugin-admin-console-bazel-master/lastSuccessfulBuild/artifact/bazel-bin/plugins/admin-console/admin-console.jar";
+          sha256 = "sha256:0bfrjd2mi5pwrsyy0s0lgrz93zwphiv81s7c7pxq4rls7n5mdx25";
+        };
       };
     };
     nginx = {
