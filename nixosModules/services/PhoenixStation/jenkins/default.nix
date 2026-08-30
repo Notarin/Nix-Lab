@@ -5,7 +5,7 @@
 }: {
   services = {
     jenkins = {
-      enable = true;
+      enable = false;
       port = 1444;
       prefix = "/ci";
       packages = builtins.attrValues {
@@ -18,7 +18,7 @@
       };
     };
     nginx.virtualHosts = {
-      "hl.squishcat.net".locations."${config.services.jenkins.prefix}/" = {
+      ${config.services.gerrit.domain}.locations."${config.services.jenkins.prefix}/" = {
         proxyPass = "http://127.0.0.1:${toString config.services.jenkins.port}";
         extraConfig = ''
           proxy_set_header Host $host;
