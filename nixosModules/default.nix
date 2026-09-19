@@ -8,6 +8,7 @@
     ./users
     ./disk.nix
     ./functions.nix
+    ./hardware-key.nix
     ./hardware.nix
     ./hostname.nix
     ./hosts.nix
