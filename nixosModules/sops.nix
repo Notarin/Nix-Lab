@@ -25,7 +25,5 @@
     sops.secrets."users/kel" = {
       neededForUsers = true;
     };
-    sops.secrets."ss14-oauth-secret" = {};
-    sops.secrets."oauth2-cookie-secret" = {};
   };
 }
