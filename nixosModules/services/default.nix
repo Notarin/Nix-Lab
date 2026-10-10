@@ -1,6 +1,7 @@
 {fn, ...}: {
   imports = [
     ./PhoenixStation
+    ./forgejo-runner.nix
     ./nginx.nix
     ./quest.nix
     ./sillytavern.nix
