@@ -15,6 +15,7 @@
     ./hyprland.nix
     ./iso.nix
     ./kmscon.nix
+    ./memory.nix
     ./persistence.nix
     ./sops.nix
     ./steam.nix
