@@ -11,7 +11,7 @@
   services = {
     sillytavern.enable = fn.ifHost "uriel" true;
     nginx.enable = fn.ifHost "uriel" true;
-    snix-bot.enable = fn.ifHost "uriel" true;
+    snix-bot.enable = fn.ifHost "uriel" false;
     VR.enable = fn.ifHost "uriel" true;
     openssh = {
       enable = true;
