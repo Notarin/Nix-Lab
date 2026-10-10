@@ -26,6 +26,11 @@ in {
         User = name;
         Group = name;
         WorkingDirectory = home;
+        Restart = "always";
+        RestartSec = "5s";
+        MemoryHigh = "1500M";
+        MemoryMax = "2G";
+        CPUQuota = "320%";
         ExecStart = lib.getExe (
           pkgs.writers.writeBashBin "snix-bot" ''
             export TOKEN="$(cat ${tokenFile})"
